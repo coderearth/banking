@@ -1,0 +1,143 @@
+#include <iostream>
+#include <cstdlib>
+
+class BankAccount {
+private:
+    double balance;
+
+public:
+    BankAccount(double initial_balance) {
+        balance = initial_balance;
+    }
+
+    void deposit(double amount) {
+        if (amount > 0) {
+            balance += amount;
+            std::cout << "Deposited $" << amount << ". New balance: $" << balance << std::endl;
+        } else {
+            std::cout << "Invalid deposit amount. Please enter a positive amount." << std::endl;
+        }
+    }
+
+    void withdraw(double amount) {
+        if (amount > 0 && amount <= balance) {
+            balance -= amount;
+            std::cout << "Withdrawn $" << amount << ". New balance: $" << balance << std::endl;
+        } else if (amount > balance) {
+            std::cout << "Insufficient funds. Cannot withdraw $" << amount << "." << std::endl;
+        } else {
+            std::cout << "Invalid withdrawal amount. Please enter a positive amount." << std::endl;
+        }
+    }
+
+    double getBalance() {
+        return balance;
+    }
+};
+
+int main() {
+    int choice;
+    double initial_balance;
+    std::cout << "Enter initial balance: $";
+    std::cin >> initial_balance;
+
+    BankAccount account(initial_balance);
+
+    do {
+        std::cout << "\nMenu:\n";
+        std::cout << "1. Arithmetical Operations\n";
+        std::cout << "2. Greatest and Least value\n";
+        std::cout << "3. Banking Transactions\n";
+        std::cout << "4. Odd or Even Numbers\n";
+        std::cout << "5. Exit\n";
+        std::cout << "Enter your choice: ";
+        std::cin >> choice;
+
+        switch (choice) {
+            case 1:
+                // Arithmetical Operations
+                double num1, num2;
+                char op;
+                std::cout << "Enter two numbers: ";
+                std::cin >> num1 >> num2;
+                std::cout << "Enter an operator (+, -, *, /): ";
+                std::cin >> op;
+                switch (op) {
+                    case '+':
+                        std::cout << "Result: " << num1 + num2 << std::endl;
+                        break;
+                    case '-':
+                        std::cout << "Result: " << num1 - num2 << std::endl;
+                        break;
+                    case '*':
+                        std::cout << "Result: " << num1 * num2 << std::endl;
+                        break;
+                    case '/':
+                        if (num2 != 0)
+                            std::cout << "Result: " << num1 / num2 << std::endl;
+                        else
+                            std::cout << "Division by zero is not allowed." << std::endl;
+                        break;
+                    default:
+                        std::cout << "Invalid operator." << std::endl;
+                }
+                break;
+            case 2:
+                // Greatest and Least value
+                double val1, val2;
+                std::cout << "Enter two numbers: ";
+                std::cin >> val1 >> val2;
+                std::cout << "Greatest value: " << std::max(val1, val2) << std::endl;
+                std::cout << "Least value: " << std::min(val1, val2) << std::endl;
+                break;
+            case 3:
+                // Banking Transactions
+                int transChoice;
+                double transAmount;
+                std::cout << "\nBanking Transactions:\n";
+                std::cout << "1. Deposit\n";
+                std::cout << "2. Withdraw\n";
+                std::cout << "3. Check Balance\n";
+                std::cout << "4. Back to Main Menu\n";
+                std::cout << "Enter your choice: ";
+                std::cin >> transChoice;
+                switch (transChoice) {
+                    case 1:
+                        std::cout << "Enter the deposit amount: $";
+                        std::cin >> transAmount;
+                        account.deposit(transAmount);
+                        break;
+                    case 2:
+                        std::cout << "Enter the withdrawal amount: $";
+                        std::cin >> transAmount;
+                        account.withdraw(transAmount);
+                        break;
+                    case 3:
+                        std::cout << "Current balance: $" << account.getBalance() << std::endl;
+                        break;
+                    case 4:
+                        break;
+                    default:
+                        std::cout << "Invalid choice." << std::endl;
+                }
+                break;
+            case 4:
+                // Odd or Even Numbers
+                int number;
+                std::cout << "Enter an integer: ";
+                std::cin >> number;
+                if (number % 2 == 0)
+                    std::cout << number << " is even." << std::endl;
+                else
+                    std::cout << number << " is odd." << std::endl;
+                break;
+            case 5:
+                std::cout << "Exiting program.\n";
+                break;
+            default:
+                std::cout << "Invalid choice. Please try again." << std::endl;
+        }
+    } while (choice != 5);
+
+    return 0;
+}
